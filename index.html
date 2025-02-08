@@ -1,4 +1,3 @@
-
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -78,7 +77,20 @@
             font-size: 0.9rem;
         }
         audio {
-            margin-top: 20px;
+            display: none;
+        }
+        /* Floating heart animation */
+        @keyframes floatHearts {
+            0% { transform: translateY(0) scale(0.6); opacity: 1; }
+            100% { transform: translateY(-100vh) scale(1.2); opacity: 0; }
+        }
+        .heart {
+            position: absolute;
+            width: 20px;
+            height: 20px;
+            background-color: red;
+            clip-path: polygon(50% 0%, 100% 35%, 85% 100%, 50% 75%, 15% 100%, 0% 35%);
+            animation: floatHearts 5s ease-in-out forwards;
         }
     </style>
 </head>
@@ -90,9 +102,9 @@
 </header>
 
 <section class="gallery">
-    <img src="./images/IMG_6757.jpg" alt="Memory 1">
-    <img src="./images/IMG20230924192409.jpg" alt="Memory 2">
-    <img src="./images/Snapchat-998052429.jpg" alt="Memory 3">
+    <img src="IMG_6757.jpg" alt="Memory 1">
+    <img src="IMG20230924192409.jpg" alt="Memory 2">
+    <img src="Snapchat-998052429.jpg" alt="Memory 3">
 </section>
 
 <section class="message-section">
@@ -100,8 +112,8 @@
     <p>Chhaya, it's been an amazing two years filled with joy, laughter, and unforgettable memories. You light up my world, and I'm so lucky to have you by my side. Thank you for being my best friend and the love of my life. Here's to many more years together. ❤️</p>
 </section>
 
-<audio controls autoplay loop>
-    <source src="./romantic_track.mp3" type="audio/mpeg">
+<audio id="background-audio" autoplay loop>
+    <source src="romantic_track.mp3" type="audio/mpeg">
     Your browser does not support the audio element.
 </audio>
 
@@ -117,6 +129,26 @@
             document.body.style.transition = "opacity 2s";
             document.body.style.opacity = 1;
         }, 100);
+
+        // Ensure audio plays automatically (requires user interaction on some browsers)
+        const audio = document.getElementById("background-audio");
+        audio.play().catch(() => {
+            console.log("User interaction required to play audio automatically.");
+        });
+
+        // Heart floating effect
+        function createHeart() {
+            const heart = document.createElement('div');
+            heart.classList.add('heart');
+            heart.style.left = Math.random() * 100 + 'vw';
+            heart.style.animationDuration = Math.random() * 2 + 3 + 's';
+            document.body.appendChild(heart);
+            setTimeout(() => heart.remove(), 5000);
+        }
+
+        // Throw hearts for 3 seconds
+        let heartInterval = setInterval(createHeart, 300);
+        setTimeout(() => clearInterval(heartInterval), 3000);
     });
 </script>
 
