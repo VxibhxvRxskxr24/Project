@@ -92,6 +92,15 @@
             clip-path: polygon(50% 0%, 100% 35%, 85% 100%, 50% 75%, 15% 100%, 0% 35%);
             animation: floatHearts 5s ease-in-out forwards;
         }
+        .play-audio-btn {
+            padding: 10px 20px;
+            background-color: #ff6b81;
+            color: white;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            display: none;
+        }
     </style>
 </head>
 <body>
@@ -112,10 +121,12 @@
     <p>Chhaya, it's been an amazing two years filled with joy, laughter, and unforgettable memories. You light up my world, and I'm so lucky to have you by my side. Thank you for being my best friend and the love of my life. Here's to many more years together. ❤️</p>
 </section>
 
-<audio id="background-audio" autoplay loop>
+<audio id="background-audio" loop>
     <source src="romantic_track.mp3" type="audio/mpeg">
     Your browser does not support the audio element.
 </audio>
+
+<button id="play-audio-btn" class="play-audio-btn">Play Background Music</button>
 
 <footer>
     <p>Made with ❤️ for Chhaya by Vaibhav</p>
@@ -130,10 +141,19 @@
             document.body.style.opacity = 1;
         }, 100);
 
-        // Ensure audio plays automatically (requires user interaction on some browsers)
         const audio = document.getElementById("background-audio");
+        const playAudioBtn = document.getElementById("play-audio-btn");
+
+        // Try to autoplay the audio, fallback if user interaction is required
         audio.play().catch(() => {
-            console.log("User interaction required to play audio automatically.");
+            playAudioBtn.style.display = "block";
+        });
+
+        // Play audio on button click
+        playAudioBtn.addEventListener("click", () => {
+            audio.play().then(() => {
+                playAudioBtn.style.display = "none";
+            });
         });
 
         // Heart floating effect
